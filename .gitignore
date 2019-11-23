@@ -1,0 +1,4 @@
+.ghc.*
+ghcid.reload
+dist
+node_modules
