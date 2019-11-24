@@ -8,7 +8,6 @@ import Common.Sitemap
 import Control.Monad.Fix
 import qualified Data.ByteString.Lazy as LBS
 import Data.Functor.Identity (Identity(..))
-import Data.Text
 import Network.HTTP.Types
 import Network.Wai
 import Reflex.DataSource
@@ -46,14 +45,11 @@ staticW hW bodyW =
       hW
       elAttr "script" ("src" =: "jsaddle.js") blank
     el "body" $ do
-      ePb <- getPostBuild
-      eResp <- query ((RequestG1) <$ ePb)
-      _ <- widgetHold (text "Waiting for Loading") ((\(b2) -> text ("Length (prerender) is: " <> (pack . show $ b2))) <$> eResp)
       bodyW
 
 app :: Application
 app request respond = do
-  (_, bs) <- renderStatic $ runIOSource handler $ runServerRoute "http://localhost:3003" request encoder decoder $ staticW headW routeWidget
+  (_, bs) <- renderStatic $ runIOSource handler $ runServerRoute request encoder decoder $ staticW headW routeWidget
   respond $ responseLBS
     status200
     [("Content-Type", "text/html")]

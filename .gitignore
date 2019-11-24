@@ -1,4 +1,5 @@
 .ghc.*
 ghcid.reload
 dist
+dist-newstyle
 node_modules
