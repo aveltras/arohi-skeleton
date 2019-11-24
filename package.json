@@ -4,7 +4,7 @@
     "ghcid": "ghcid --command 'cabal v2-repl server --builddir dist/ghcid-app' --directory app --test Main.main -W",
     "watch-cabal": "onchange '**/*.cabal' -- touch shell.nix",
     "watch": "browser-sync start --ss build --port 3000 --proxy http://localhost:8080/ --ws --no-open --no-notify --watch",
-    "reload": "onchange .ghcid.reload -- browser-sync reload",
+    "reload": "onchange ghcid.reload -- browser-sync reload",
     "css": "postcss ./assets/main.css -o ./build/all.css -w -u postcss-import -u postcss-nested -u postcss-preset-env",
     "dev": "concurrently 'yarn:ghcid' 'yarn:watch' 'yarn:reload' 'yarn:css' 'yarn:watch-cabal'"
   },
