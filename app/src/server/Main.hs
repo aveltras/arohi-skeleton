@@ -39,12 +39,13 @@ staticW ::
   , HasDataSource t req m
   , Route t r m
   ) => m () -> m () -> m ()
-staticW hW bodyW =
+staticW hW bodyW = do
+  prefix <- askPrefix
   el "html" $ do
     el "head" $ do
       hW
       elAttr "script" ("src" =: "jsaddle.js") blank
-    el "body" $ do
+    elAttr "body" ("data-ws" =: "test" <> "data-prefix" =: prefix) $ do
       bodyW
 
 app :: Application

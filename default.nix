@@ -23,7 +23,6 @@ in reflexPlatform.project ({ pkgs, ... }: {
   overrides = self: super:
     let
       toolkitSrc = githubTarball "aveltras" "reflex-toolkit" "master";
-      # toolkitSrc = (pkgs.nix-gitignore.gitignoreSourcePure [ ./../reflex-toolkit/.gitignore ] ./../reflex-toolkit);
     in {
       reflex-datasource = self.callCabal2nix "reflex-datasource" "${toolkitSrc}/reflex-datasource" {};
       reflex-datasource-client = self.callCabal2nix "reflex-datasource-client" "${toolkitSrc}/reflex-datasource-client" {};
