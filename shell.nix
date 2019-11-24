@@ -1,1 +1,1 @@
-(import ./default.nix).shells.ghc
+(import ./default.nix { useDevServer = true; }).shells.ghc

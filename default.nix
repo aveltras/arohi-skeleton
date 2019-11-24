@@ -1,3 +1,5 @@
+{ useDevServer ? false }:
+
 let
 
   githubTarball = owner: repo: rev:
@@ -28,7 +30,13 @@ in reflexPlatform.project ({ pkgs, ... }: {
       arohi-datasource = self.callCabal2nix "arohi-datasource" "${arohiSrc}/arohi-datasource" {};
       arohi-datasource-client = self.callCabal2nix "arohi-datasource-client" "${arohiSrc}/arohi-datasource-client" {};
       arohi-datasource-server = self.callCabal2nix "arohi-datasource-server" "${arohiSrc}/arohi-datasource-server" {};
-      arohi-server = self.callCabal2nix "arohi-server" "${arohiSrc}/arohi-server" {};
+      arohi-server =
+        let pkgDrv = (self.callCabal2nix "arohi-server" "${arohiSrc}/arohi-server" {});
+        in if !(self.ghc.isGhcjs or false) && useDevServer
+           then pkgs.haskell.lib.addBuildDepends
+             (pkgs.haskell.lib.enableCabalFlag pkgDrv "devserver")
+             [self.jsaddle-warp self.wai-cors]
+           else pkgDrv;
       arohi-route = self.callCabal2nix "arohi-route" "${arohiSrc}/arohi-route" {};
       arohi-route-client = self.callCabal2nix "arohi-route-client" "${arohiSrc}/arohi-route-client" {};
       arohi-route-server = self.callCabal2nix "arohi-route-server" "${arohiSrc}/arohi-route-server" {};
