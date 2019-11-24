@@ -9,4 +9,4 @@ mv $DIR/app/skeleton.cabal $DIR/app/app.cabal
 sed -i 's/skeleton/app/g' $DIR/app/app.cabal
 rm -rf $TMP_DIR
 git add app/
-git commit -m 'Bring up to date with reflex-toolkit repo'
+git commit -m 'Bring up to date with arohi repo'
