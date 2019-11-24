@@ -5,6 +5,7 @@ let
       url = "https://github.com/${owner}/${repo}/archive/${rev}.tar.gz";
     };
 
+  latestPkgs = import (githubTarball "NixOS" "nixpkgs" "master") {};
   reflexPlatform = import (githubTarball "reflex-frp" "reflex-platform" "develop") {};
   
 in reflexPlatform.project ({ pkgs, ... }: {
@@ -22,20 +23,21 @@ in reflexPlatform.project ({ pkgs, ... }: {
 
   overrides = self: super:
     let
-      toolkitSrc = githubTarball "aveltras" "reflex-toolkit" "master";
+      arohiSrc = githubTarball "aveltras" "arohi" "master";
     in {
-      reflex-datasource = self.callCabal2nix "reflex-datasource" "${toolkitSrc}/reflex-datasource" {};
-      reflex-datasource-client = self.callCabal2nix "reflex-datasource-client" "${toolkitSrc}/reflex-datasource-client" {};
-      reflex-datasource-server = self.callCabal2nix "reflex-datasource-server" "${toolkitSrc}/reflex-datasource-server" {};
-      reflex-devserver = self.callCabal2nix "reflex-devserver" "${toolkitSrc}/reflex-devserver" {};
-      reflex-route = self.callCabal2nix "reflex-route" "${toolkitSrc}/reflex-route" {};
-      reflex-route-client = self.callCabal2nix "reflex-route-client" "${toolkitSrc}/reflex-route-client" {};
-      reflex-route-server = self.callCabal2nix "reflex-route-server" "${toolkitSrc}/reflex-route-server" {};
+      arohi-datasource = self.callCabal2nix "arohi-datasource" "${arohiSrc}/arohi-datasource" {};
+      arohi-datasource-client = self.callCabal2nix "arohi-datasource-client" "${arohiSrc}/arohi-datasource-client" {};
+      arohi-datasource-server = self.callCabal2nix "arohi-datasource-server" "${arohiSrc}/arohi-datasource-server" {};
+      arohi-server = self.callCabal2nix "arohi-server" "${arohiSrc}/arohi-server" {};
+      arohi-route = self.callCabal2nix "arohi-route" "${arohiSrc}/arohi-route" {};
+      arohi-route-client = self.callCabal2nix "arohi-route-client" "${arohiSrc}/arohi-route-client" {};
+      arohi-route-server = self.callCabal2nix "arohi-route-server" "${arohiSrc}/arohi-route-server" {};
     };
   
   shellToolOverrides = ghc: super: {
     ghcid = pkgs.haskell.lib.justStaticExecutables super.ghcid;
     haskell-ide-engine = null;
+    yarn = latestPkgs.yarn;
   };
   
 })

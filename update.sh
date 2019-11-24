@@ -2,7 +2,7 @@
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 TMP_DIR=$DIR/.tmp
 rm -rf $TMP_DIR
-git clone https://github.com/aveltras/reflex-toolkit $TMP_DIR
+git clone https://github.com/aveltras/arohi $TMP_DIR
 rm -rf $DIR/app
 cp -r $TMP_DIR/skeleton $DIR/app
 mv $DIR/app/skeleton.cabal $DIR/app/app.cabal

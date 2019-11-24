@@ -1,5 +1,7 @@
 .ghc.*
 ghcid.reload
+build
 dist
 dist-newstyle
 node_modules
+yarn.lock
